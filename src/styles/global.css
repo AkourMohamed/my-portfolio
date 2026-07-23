@@ -1,0 +1,102 @@
+/*
+  Design tokens
+  -------------
+  Palette: near-black slate background, warm paper-white text,
+  a single signal-blue accent (status/uptime feel, not corporate-Azure-blue),
+  a muted slate for secondary text, and a status-green reserved
+  ONLY for the "available" indicator — it should mean one thing.
+
+  Type: Space Grotesk for display (technical, slightly unusual
+  letterforms without being a gimmick), Inter for body copy,
+  IBM Plex Mono for dates/tags/anything that reads like system output.
+*/
+:root {
+  --bg: #0d1117;
+  --bg-raised: #151b23;
+  --text: #e8ebef;
+  --text-muted: #8b96a3;
+  --accent: #4f8dfd;
+  --accent-dim: #2a4a85;
+  --status-green: #3ecf8e;
+  --border: #232b36;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+  --radius: 6px;
+  --max-width: 720px;
+}
+
+:root:dir(rtl) {
+  --font-display: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  /* Dates, hashes, and tags stay Latin-numeral system output even in Arabic,
+     so the mono font is left as-is rather than swapped. */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: var(--accent-dim);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Visible focus state everywhere — accessibility floor, non-negotiable */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

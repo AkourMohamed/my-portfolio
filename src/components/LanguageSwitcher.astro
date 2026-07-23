@@ -1,0 +1,45 @@
+---
+import { languages, defaultLang } from "@/i18n/ui";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const codes = Object.keys(languages) as Lang[];
+const labels: Record<Lang, string> = { en: "EN", fr: "FR", ar: "AR" };
+const hrefFor = (code: Lang) => (code === defaultLang ? "/" : `/${code}/`);
+---
+
+<div class="lang-switch mono" role="group" aria-label="Language">
+  {
+    codes.map((code, i) => (
+      <>
+        {i > 0 && <span aria-hidden="true">/</span>}
+        <a href={hrefFor(code)} aria-current={lang === code ? "page" : undefined}>
+          {labels[code]}
+        </a>
+      </>
+    ))
+  }
+</div>
+
+<style>
+  .lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+  }
+  .lang-switch a {
+    color: var(--text-muted);
+  }
+  .lang-switch a[aria-current="page"] {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .lang-switch span {
+    color: var(--text-muted);
+  }
+</style>

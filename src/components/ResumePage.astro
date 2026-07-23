@@ -1,0 +1,309 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DeployLog from "@/components/DeployLog.astro";
+import ImpactCards from "@/components/ImpactCards.astro";
+import ContactSection from "@/components/ContactSection.astro";
+import GitHubActivity from "@/components/GitHubActivity.astro";
+import SectionNav from "@/components/SectionNav.astro";
+import { fetchContributionCalendar } from "@/lib/github";
+import { useTranslations } from "@/i18n/utils";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const resume = await getEntry("resume", lang);
+if (!resume) throw new Error(`resume entry missing for locale "${lang}" — check src/content/resume/${lang}.json`);
+const r = resume.data;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: r.name,
+  jobTitle: r.role,
+  address: { "@type": "PostalAddress", addressLocality: r.location },
+  email: r.email,
+  ...(r.phone ? { telephone: r.phone } : {}),
+  sameAs: r.links.map((l) => l.url),
+};
+
+const alternates = [
+  { lang: "en", href: "/" },
+  { lang: "fr", href: "/fr/" },
+  { lang: "ar", href: "/ar/" },
+];
+
+const githubUsername = r.links
+  .find((l) => l.label === "GitHub")
+  ?.url.replace(/\/$/, "")
+  .split("/")
+  .pop();
+
+const calendar = githubUsername ? await fetchContributionCalendar(githubUsername) : null;
+
+const navItems = [
+  { id: "profile", label: t("section.profile") },
+  ...(r.impact.length > 0 ? [{ id: "impact", label: t("section.impact") }] : []),
+  { id: "skills", label: t("section.skills") },
+  { id: "experience", label: t("section.experience") },
+  ...(calendar ? [{ id: "github", label: t("section.github") }] : []),
+  ...(r.education.length > 0 ? [{ id: "education", label: t("section.education") }] : []),
+  ...(r.projects.length > 0 ? [{ id: "projects", label: t("section.projects") }] : []),
+  ...(r.training.length > 0 ? [{ id: "training", label: t("section.training") }] : []),
+  ...(r.languages.length > 0 || r.interests.length > 0
+    ? [{ id: "languages-interests", label: t("section.languagesInterests") }]
+    : []),
+  { id: "contact", label: t("section.contact") },
+];
+---
+
+<BaseLayout
+  title={`${r.name} — ${r.role}`}
+  description={r.summary}
+  jsonLd={jsonLd}
+  lang={lang}
+  alternates={alternates}
+>
+  <SectionNav items={navItems} />
+
+  <section class="hero" id="profile">
+    <p class="status mono">
+      <span class="dot" aria-hidden="true"></span>
+      {t("hero.status")}
+    </p>
+    <h1>{r.name}</h1>
+    <p class="role">{r.role}</p>
+    <p class="summary">{r.summary}</p>
+    <p class="meta mono muted">
+      {r.location} · <a href={`mailto:${r.email}`}>{r.email}</a>
+      {r.phone && <> · <a href={`tel:${r.phone.replace(/\s+/g, "")}`}>{r.phone}</a></>}
+    </p>
+    <p class="links">
+      {r.links.map((l) => (
+        <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a>
+      ))}
+    </p>
+  </section>
+
+  {r.impact.length > 0 && (
+    <section id="impact" aria-labelledby="impact-heading">
+      <h2 id="impact-heading">{t("section.impact")}</h2>
+      <ImpactCards entries={r.impact} />
+    </section>
+  )}
+
+  <section id="skills" aria-labelledby="skills-heading">
+    <h2 id="skills-heading">{t("section.skills")}</h2>
+    <div class="skills">
+      {r.skills.map((group) => (
+        <div class="skill-group">
+          <p class="mono muted category">{group.category}</p>
+          <p>{group.items.join(" · ")}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="experience-heading">
+    <h2 id="experience-heading">{t("section.experience")}</h2>
+    <DeployLog entries={r.experience} />
+  </section>
+
+  {githubUsername && <GitHubActivity lang={lang} username={githubUsername} calendar={calendar} />}
+
+  {r.education.length > 0 && (
+    <section id="education" aria-labelledby="education-heading">
+      <h2 id="education-heading">{t("section.education")}</h2>
+      <ul class="education">
+        {r.education.map((e) => (
+          <li>
+            <h3>{e.degree}</h3>
+            <p class="muted">
+              {e.institution}
+              {e.location && ` · ${e.location}`}
+            </p>
+            <p class="mono muted dates">{e.start} → {e.end}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {r.projects.length > 0 && (
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">{t("section.projects")}</h2>
+      <ul class="projects">
+        {r.projects.map((p) => (
+          <li>
+            <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a> : p.name}</h3>
+            <p class="muted">{p.description}</p>
+            {p.tags.length > 0 && <p class="mono tags">{p.tags.join(" · ")}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {r.certifications.length > 0 && (
+    <section aria-labelledby="certs-heading">
+      <h2 id="certs-heading">{t("section.training")}</h2>
+      <ul class="certs">
+        {r.certifications.map((c) => (
+          <li>
+            {c.url ? <a href={c.url} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
+            <span class="muted"> — {c.issuer}{c.date ? ` · ${c.date}` : ""}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {r.training.length > 0 && (
+    <section id="training" aria-labelledby="training-heading">
+      <h2 id="training-heading">{t("section.training")}</h2>
+      <ul class="training">
+        {r.training.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <div class="meta-grid" id="languages-interests">
+    {r.languages.length > 0 && (
+      <section id="languages" aria-labelledby="languages-heading">
+        <h2 id="languages-heading">{t("section.languages")}</h2>
+        <ul class="plain">
+          {r.languages.map((l) => (
+            <li>{l.name} <span class="muted">— {l.level}</span></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {r.interests.length > 0 && (
+      <section id="interests" aria-labelledby="interests-heading">
+        <h2 id="interests-heading">{t("section.interests")}</h2>
+        <p class="muted">{r.interests.join(" · ")}</p>
+      </section>
+    )}
+  </div>
+
+  <ContactSection lang={lang} email={r.email} phone={r.phone} links={r.links} />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: 24px;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--status-green);
+    margin-bottom: 16px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-green);
+  }
+  h1 {
+    font-size: clamp(1.75rem, 5vw + 1rem, 2.4rem);
+    margin: 0 0 4px;
+  }
+  .role {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+  .summary {
+    max-width: 60ch;
+  }
+  .meta {
+    font-size: 0.85rem;
+    margin-top: 20px;
+  }
+  .links {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  section {
+    padding-bottom: 48px;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type {
+    border-bottom: none;
+  }
+  .skills {
+    display: grid;
+    gap: 16px;
+  }
+  .category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .projects,
+  .certs,
+  .education,
+  .training,
+  .plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .training li {
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .training li::before {
+    content: "· ";
+    color: var(--text-muted);
+  }
+  .projects li,
+  .certs li,
+  .education li {
+    margin-bottom: 16px;
+  }
+  .projects h3,
+  .education h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+  }
+  .education .dates {
+    font-size: 0.8rem;
+    margin: 4px 0 0;
+  }
+  .tags {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .meta-grid .plain li {
+    margin-bottom: 4px;
+  }
+  @media (max-width: 640px) {
+    .meta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

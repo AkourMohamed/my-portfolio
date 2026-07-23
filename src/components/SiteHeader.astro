@@ -1,0 +1,41 @@
+---
+import { getEntry } from "astro:content";
+import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const resume = await getEntry("resume", lang);
+
+const resumeHref = lang === "en" ? "/" : `/${lang}/`;
+---
+
+<header class="wrap header">
+  <a class="brand" href={resumeHref}>{resume?.data.name}</a>
+  <div class="header-right">
+    <LanguageSwitcher lang={lang} />
+  </div>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+</style>

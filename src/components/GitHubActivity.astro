@@ -1,0 +1,143 @@
+---
+import type { ContributionCalendar } from "@/lib/github";
+import { useTranslations } from "@/i18n/utils";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+  username: string;
+  calendar: ContributionCalendar | null;
+}
+const { lang, username, calendar } = Astro.props;
+const t = useTranslations(lang);
+
+const monthFormatter = calendar ? new Intl.DateTimeFormat(lang, { month: "short", timeZone: "UTC" }) : null;
+const monthLabels: { weekIndex: number; label: string }[] = [];
+if (calendar && monthFormatter) {
+  let prevMonth = -1;
+  calendar.weeks.forEach((week, i) => {
+    const firstDay = week[0];
+    if (!firstDay) return;
+    const month = new Date(firstDay.date).getUTCMonth();
+    if (month !== prevMonth) {
+      monthLabels.push({ weekIndex: i, label: monthFormatter.format(new Date(firstDay.date)) });
+      prevMonth = month;
+    }
+  });
+}
+
+// Sun..Sat, only Mon/Wed/Fri get visible text (matches GitHub's own convention)
+const dayLabels = ["", t("github.day.mon"), "", t("github.day.wed"), "", t("github.day.fri"), ""];
+
+const legendColors = ["#9be9a8", "#40c463", "#30a14e", "#216e39"];
+---
+
+{
+  calendar && (
+    <section id="github" aria-labelledby="github-heading">
+      <h2 id="github-heading">{t("section.github")}</h2>
+      <p class="mono muted total">
+        {calendar.totalContributions} {t("github.contributions")} ·{" "}
+        <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer">
+          @{username}
+        </a>
+      </p>
+      <div class="chart-card" dir="ltr">
+        <div
+          class="chart"
+          style={`grid-template-columns: auto repeat(${calendar.weeks.length}, 1fr)`}
+          role="img"
+          aria-label={`${calendar.totalContributions} ${t("github.contributions")}`}
+        >
+          {monthLabels.map((m) => (
+            <span class="mono month-label" style={`grid-column: ${m.weekIndex + 2}; grid-row: 1`}>
+              {m.label}
+            </span>
+          ))}
+          {dayLabels.map((label, i) => (
+            <span class="mono day-label" style={`grid-column: 1; grid-row: ${i + 2}`}>
+              {label}
+            </span>
+          ))}
+          {calendar.weeks.map((week, wi) =>
+            week.map((day, di) => (
+              <span
+                class="day"
+                aria-hidden="true"
+                style={`grid-column: ${wi + 2}; grid-row: ${di + 2};${day.count > 0 ? ` background:${day.color};` : ""}`}
+                title={`${day.date}: ${day.count}`}
+              />
+            )),
+          )}
+        </div>
+        <div class="legend mono muted">
+          <span>{t("github.legend.less")}</span>
+          <span class="swatch" />
+          {legendColors.map((c) => (
+            <span class="swatch" style={`background:${c}`} />
+          ))}
+          <span>{t("github.legend.more")}</span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  section {
+    padding-bottom: 48px;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .total {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+  .chart-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+  }
+  .chart {
+    display: grid;
+    grid-template-rows: 14px repeat(7, 1fr);
+    gap: 3px;
+    width: 100%;
+  }
+  .month-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    align-self: end;
+  }
+  .day-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
+  }
+  .day {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 12px;
+    font-size: 0.7rem;
+  }
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+</style>

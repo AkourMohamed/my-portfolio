@@ -1,0 +1,70 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+}
+const { title, description, pubDate, updatedDate } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+};
+
+const formatted = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={title} description={description} type="article" jsonLd={jsonLd} lang="en">
+  <article class="post">
+    <p class="mono muted date">{formatted}</p>
+    <h1>{title}</h1>
+    <div class="content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding: 24px 0;
+  }
+  .date {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 24px;
+  }
+  .content {
+    max-width: 68ch;
+  }
+  .content :global(p) {
+    margin-bottom: 1.2em;
+  }
+  .content :global(a) {
+    color: var(--accent);
+  }
+  .content :global(pre) {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    overflow-x: auto;
+  }
+  .content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>

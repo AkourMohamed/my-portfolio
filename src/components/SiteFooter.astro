@@ -1,0 +1,25 @@
+---
+import { useTranslations } from "@/i18n/utils";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="wrap footer">
+  <p class="mono muted">&copy; {year} &mdash; {t("footer.built")}</p>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    margin-top: 64px;
+    padding-top: 24px;
+    padding-bottom: 48px;
+    font-size: 0.85rem;
+  }
+</style>

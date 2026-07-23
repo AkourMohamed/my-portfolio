@@ -1,0 +1,65 @@
+---
+import Seo from "@/components/Seo.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
+import "@/styles/global.css";
+import { defaultLang, isRtl } from "@/i18n/ui";
+import type { Lang } from "@/i18n/ui";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
+  jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
+  lang?: Lang;
+  alternates?: { lang: string; href: string }[];
+}
+
+const {
+  title,
+  description,
+  image,
+  type,
+  jsonLd,
+  noindex,
+  lang = defaultLang,
+  alternates,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang} dir={isRtl(lang) ? "rtl" : "ltr"}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- referrer + no-sniff duplicated here for meta-level defense in depth;
+         the real enforcement is the HTTP headers in staticwebapp.config.json -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+    />
+    <Seo
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      jsonLd={jsonLd}
+      noindex={noindex}
+      alternates={alternates}
+    />
+  </head>
+  <body>
+    <SiteHeader lang={lang} />
+    <main class="wrap">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} />
+  </body>
+</html>

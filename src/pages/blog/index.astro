@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayout title="Blog" description="Notes on cloud, DevOps, and building things." lang="en">
+  <h1>Blog</h1>
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+          <p class="mono muted date">
+            {post.data.pubDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+          <p class="muted">{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+  {posts.length === 0 && <p class="muted">No posts yet.</p>}
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 32px;
+  }
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .posts li {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .posts a {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .posts a:hover {
+    color: var(--accent);
+  }
+  .date {
+    font-size: 0.8rem;
+    margin: 6px 0;
+  }
+</style>

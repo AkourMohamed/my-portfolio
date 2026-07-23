@@ -1,0 +1,78 @@
+---
+interface Entry {
+  metric: string;
+  title: string;
+  description: string;
+  tags: string[];
+}
+interface Props {
+  entries: Entry[];
+}
+const { entries } = Astro.props;
+---
+
+<div class="impact-grid">
+  {
+    entries.map((entry) => (
+      <div class="card">
+        <p class="metric">{entry.metric}</p>
+        <h3>{entry.title}</h3>
+        <p class="muted description">{entry.description}</p>
+        {entry.tags.length > 0 && (
+          <div class="tags">
+            {entry.tags.map((tag) => (
+              <span class="tag mono">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 640px) {
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+  }
+  .metric {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  h3 {
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .description {
+    font-size: 0.9rem;
+    margin: 0 0 14px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+interface Entry {
+  company: string;
+  title: string;
+  start: string;
+  end: string;
+  location?: string;
+  highlights: string[];
+}
+interface Props {
+  entries: Entry[];
+}
+const { entries } = Astro.props;
+
+// Deterministic short "hash" per entry, purely decorative —
+// no need for crypto-strength randomness here, it's a visual motif.
+function fakeHash(seed: string) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return h.toString(16).slice(0, 7);
+}
+---
+
+<ol class="log">
+  {
+    entries.map((entry) => (
+      <li class="entry">
+        <div class="meta mono muted">
+          <span class="hash">{fakeHash(entry.company + entry.title)}</span>
+          <span>{entry.start} → {entry.end}</span>
+        </div>
+        <h3>{entry.title}</h3>
+        <p class="company">
+          {entry.company}
+          {entry.location && <span class="muted"> · {entry.location}</span>}
+        </p>
+        <ul class="highlights">
+          {entry.highlights.map((h) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-inline-start: 2px solid var(--border);
+  }
+  .entry {
+    position: relative;
+    padding-block-end: 40px;
+    padding-inline-start: 28px;
+  }
+  .entry::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -7px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+  }
+  .hash::before {
+    content: "#";
+    opacity: 0.6;
+  }
+  h3 {
+    margin: 6px 0 2px;
+    font-size: 1.1rem;
+  }
+  .company {
+    margin: 0 0 12px;
+  }
+  .highlights {
+    margin: 0;
+    padding-inline-start: 20px;
+  }
+  .highlights li {
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+</style>

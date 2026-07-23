@@ -1,0 +1,77 @@
+---
+import { useTranslations } from "@/i18n/utils";
+import type { Lang } from "@/i18n/ui";
+
+interface LinkEntry {
+  label: string;
+  url: string;
+}
+interface Props {
+  lang: Lang;
+  email: string;
+  phone?: string;
+  links: LinkEntry[];
+}
+const { lang, email, phone, links } = Astro.props;
+const t = useTranslations(lang);
+const resumeHref = lang === "en" ? "/resume-en.pdf" : "/resume-fr.pdf";
+---
+
+<section id="contact" aria-labelledby="contact-heading" class="contact">
+  <h2 id="contact-heading">{t("contact.heading")}</h2>
+  <p class="mono details">
+    <a href={`mailto:${email}`}>{email}</a>
+    {phone && <> · <a href={`tel:${phone.replace(/\s+/g, "")}`}>{phone}</a></>}
+  </p>
+  <p class="cta-row">
+    {links.map((l) => (
+      <a class="btn" href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a>
+    ))}
+    <a class="btn btn-primary" href={resumeHref} download>{t("contact.resume")}</a>
+  </p>
+</section>
+
+<style>
+  .contact {
+    text-align: center;
+    padding: 24px 0 16px;
+  }
+  h2 {
+    font-size: 1.6rem;
+    max-width: 46ch;
+    margin: 0 auto 20px;
+  }
+  .details {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .cta-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    color: var(--bg);
+    opacity: 0.9;
+  }
+</style>

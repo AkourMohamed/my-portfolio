@@ -1,0 +1,166 @@
+{
+  "name": "Mohamed Akour",
+  "role": "Développeur Fullstack",
+  "location": "Casablanca, Maroc",
+  "email": "meed.akour@gmail.com",
+  "phone": "+212 621 421 616",
+  "summary": "Développeur Fullstack avec 5 ans d'expérience, spécialisé dans les technologies Microsoft (.NET, Azure, DevOps). Capable de transformer des besoins métiers complexes en solutions web robustes. Proactif, rigoureux et passionné par l'innovation technologique.",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/AkourMohamed" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/mohamed-akour/" }
+  ],
+  "skills": [
+    {
+      "category": "Langages de programmation",
+      "items": ["C#", "JavaScript", "TypeScript", "PHP"]
+    },
+    {
+      "category": "Développement web",
+      "items": ["HTML", "CSS", "Bootstrap", "jQuery", "Angular", "ASP.NET (Framework & Core – MVC, Web API)", "Laravel"]
+    },
+    {
+      "category": "API & Échange de données",
+      "items": ["API RESTful", "WCF", "JSON", "XML"]
+    },
+    {
+      "category": "Méthodes de conception",
+      "items": ["UML"]
+    },
+    {
+      "category": "Bases de données",
+      "items": ["SQL Server", "MySQL", "Réplication GTID"]
+    },
+    {
+      "category": "DevOps",
+      "items": ["Azure DevOps", "Pipelines CI/CD"]
+    },
+    {
+      "category": "Outils cloud & sauvegarde",
+      "items": ["Azure", "Azure Key Vault", "AWS", "Veeam (sauvegarde et réplication)"]
+    },
+    {
+      "category": "Environnements de développement",
+      "items": ["Visual Studio", "VS Code", "SQL Server Management Studio (SSMS)"]
+    }
+  ],
+  "impact": [
+    {
+      "metric": "Pic de coûts Azure résolu",
+      "title": "Investigation des coûts via Reserved Capacity",
+      "description": "Identification de la cause racine d'un pic de coûts Azure inattendu et résolution via une analyse de capacité réservée (Reserved Capacity), en corrigeant le modèle de facturation plutôt qu'en réduisant simplement les ressources.",
+      "tags": ["Azure", "Gestion des coûts", "FinOps"]
+    },
+    {
+      "metric": "Accès Key Vault durci",
+      "title": "Sécurisation par points de terminaison privés pour Eurotax",
+      "description": "Modernisation des pipelines CI/CD et durcissement de l'accès à Key Vault via des points de terminaison privés pour l'environnement Eurotax, supprimant l'exposition sur le réseau public.",
+      "tags": ["Azure Key Vault", "Points de terminaison privés", "Azure DevOps"]
+    },
+    {
+      "metric": "Socle d'API multi-tenant avec RBAC",
+      "title": "Modèle d'accès partenaires & fiduciaires",
+      "description": "Conception d'un socle d'API Web .NET multi-tenant avec contrôle d'accès basé sur les rôles, offrant aux clients partenaires et fiduciaires un accès isolé et permissionné à une infrastructure partagée.",
+      "tags": [".NET", "Web API", "RBAC", "Multi-tenant"]
+    },
+    {
+      "metric": "Réplication MySQL basée sur GTID",
+      "title": "Fiabilité des données inter-tenants",
+      "description": "Mise en place d'une réplication MySQL basée sur GTID entre les bases de données des tenants pour des données cohérentes et récupérables sur tous les environnements.",
+      "tags": ["MySQL", "GTID", "Réplication"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Finreg Services",
+      "title": "Analyste Développeur .NET",
+      "start": "2021-06",
+      "end": "Présent",
+      "location": "Casablanca, Maroc",
+      "highlights": [
+        "Participation aux réunions clients pour la collecte des besoins et des démonstrations, suivi des tâches via Jira",
+        "Refonte, amélioration continue et développement de nouvelles fonctionnalités sur des applications ASP.NET, dont move-expert.com et eurotax.fr, avec des responsabilités sur le backend et l'intégration cloud",
+        "Correction de bugs, optimisation du code et tests d'assurance de la stabilité et de la performance",
+        "Investigation et résolution d'un pic de coûts Azure via une analyse de capacité réservée (Reserved Capacity)",
+        "Modernisation des pipelines CI/CD avec Azure DevOps et durcissement de l'accès à Key Vault via des points de terminaison privés pour l'environnement Eurotax",
+        "Conception d'un socle d'API Web .NET multi-tenant avec contrôle d'accès basé sur les rôles pour les clients partenaires/fiduciaires",
+        "Gestion des bases de données et de l'infrastructure Azure, y compris groupes de ressources, réseaux virtuels et machines virtuelles pour l'hébergement des applications",
+        "Mise en place d'une réplication MySQL basée sur GTID entre les bases de données des tenants",
+        "Configuration de stratégies de sauvegarde inter-cloud (Azure vers AWS FSx via Veeam) et mise en œuvre d'une réplication de données multicloud"
+      ]
+    },
+    {
+      "company": "Finreg Services",
+      "title": "Stagiaire, Développeur .NET",
+      "start": "2021-03",
+      "end": "2021-06",
+      "location": "Casablanca, Maroc",
+      "highlights": [
+        "Découverte et prise en main de l'architecture logicielle N-Tier et MVC de l'entreprise",
+        "Familiarisation avec les environnements de développement (Visual Studio, Bitbucket, SQL Server)",
+        "Participation à des tâches de développement simples : ajout de fonctionnalités, correction de bugs et tests fonctionnels sous supervision",
+        "Contribution à la maintenance de projets internes"
+      ]
+    },
+    {
+      "company": "CDMA Solution",
+      "title": "Développeur Web",
+      "start": "2019-12",
+      "end": "2020-06",
+      "location": "Casablanca, Maroc",
+      "highlights": [
+        "Amélioration d'une application web destinée aux experts en dossiers d'accidents d'assurance",
+        "Conception et développement d'une application web de gestion des stocks",
+        "Utilisation des technologies suivantes : PHP, Laravel, MySQL, Axios, OCR, Git et GitHub"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Licence professionnelle en développement des applications web et technologies mobiles",
+      "institution": "École Supérieure de Technologie (ESTC)",
+      "start": "2021-12",
+      "end": "2022-06",
+      "location": "Casablanca, Maroc"
+    },
+    {
+      "degree": "Diplôme de Technicien Spécialisé en développement informatique",
+      "institution": "Institut Spécialisé de Gestion et d'Informatique",
+      "start": "2017-09",
+      "end": "2019-06",
+      "location": "Casablanca, Maroc"
+    },
+    {
+      "degree": "Baccalauréat en Sciences Expérimentales (option Sciences de la Vie et de la Terre)",
+      "institution": "Lycée Omar Ibnou Al Khattab",
+      "start": "2016-09",
+      "end": "2017-06",
+      "location": "Casablanca, Maroc"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Aloud (Clario)",
+      "description": "Extension Chrome de lecture de pages web à voix haute par synthèse vocale.",
+      "tags": ["Extension Chrome", "JavaScript"]
+    },
+    {
+      "name": "IMI Robot (RTPD)",
+      "description": "Système d'automatisation pour les déclarations de détachement dans le transport routier européen.",
+      "tags": [".NET", "Automatisation"]
+    }
+  ],
+  "certifications": [],
+  "training": [
+    "Formation avancée sur Angular",
+    "Cours approfondi sur Node.js et Express",
+    "Formation en développement d'API Web avec NestJS",
+    "Cours avancé sur les techniques CSS",
+    "Formation approfondie sur JavaScript"
+  ],
+  "languages": [
+    { "name": "Arabe", "level": "Natif" },
+    { "name": "Français", "level": "Professionnel limité" },
+    { "name": "Anglais", "level": "Professionnel" }
+  ],
+  "interests": ["Camping", "Voyage", "Échecs"]
+}

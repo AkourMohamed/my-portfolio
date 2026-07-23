@@ -1,0 +1,166 @@
+{
+  "name": "Mohamed Akour",
+  "role": "Full Stack Developer",
+  "location": "Casablanca, Morocco",
+  "email": "meed.akour@gmail.com",
+  "phone": "+212 621 421 616",
+  "summary": "Full Stack Developer with 5 years of experience, specialized in Microsoft technologies (.NET, Azure, DevOps). Skilled at transforming complex business requirements into robust web solutions. Proactive, detail-oriented, and passionate about technological innovation.",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/AkourMohamed" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/mohamed-akour/" }
+  ],
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": ["C#", "JavaScript", "TypeScript", "PHP"]
+    },
+    {
+      "category": "Web Development",
+      "items": ["HTML", "CSS", "Bootstrap", "jQuery", "Angular", "ASP.NET (Framework & Core – MVC, Web API)", "Laravel"]
+    },
+    {
+      "category": "API & Data Exchange",
+      "items": ["RESTful APIs", "WCF", "JSON", "XML"]
+    },
+    {
+      "category": "Design Methods",
+      "items": ["UML"]
+    },
+    {
+      "category": "Databases",
+      "items": ["SQL Server", "MySQL", "GTID replication"]
+    },
+    {
+      "category": "DevOps",
+      "items": ["Azure DevOps", "CI/CD pipelines"]
+    },
+    {
+      "category": "Cloud & Backup Tools",
+      "items": ["Azure", "Azure Key Vault", "AWS", "Veeam (backup & replication)"]
+    },
+    {
+      "category": "Development Environments",
+      "items": ["Visual Studio", "VS Code", "SQL Server Management Studio (SSMS)"]
+    }
+  ],
+  "impact": [
+    {
+      "metric": "Azure cost spike resolved",
+      "title": "Reserved Capacity cost investigation",
+      "description": "Traced an unexpected Azure cost spike to its root cause and resolved it through Reserved Capacity analysis, correcting the billing model rather than just cutting resources.",
+      "tags": ["Azure", "Cost Management", "FinOps"]
+    },
+    {
+      "metric": "Key Vault access hardened",
+      "title": "Private endpoint security for Eurotax",
+      "description": "Modernized CI/CD pipelines and hardened Key Vault access via private endpoints for the Eurotax environment, closing off public network exposure.",
+      "tags": ["Azure Key Vault", "Private Endpoints", "Azure DevOps"]
+    },
+    {
+      "metric": "Multi-tenant RBAC API skeleton",
+      "title": "Partner & fiduciary access model",
+      "description": "Built a multi-tenant .NET Web API skeleton with role-based access control, giving partner and fiduciary clients isolated, permissioned access to shared infrastructure.",
+      "tags": [".NET", "Web API", "RBAC", "Multi-tenant"]
+    },
+    {
+      "metric": "GTID-based MySQL replication",
+      "title": "Cross-tenant data reliability",
+      "description": "Set up GTID-based MySQL replication across tenant databases for consistent, recoverable data across environments.",
+      "tags": ["MySQL", "GTID", "Replication"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Finreg Services",
+      "title": ".NET Analyst Developer",
+      "start": "2021-06",
+      "end": "Present",
+      "location": "Casablanca, Morocco",
+      "highlights": [
+        "Participated in client meetings for requirements gathering and demonstrations, tracking project tasks in Jira",
+        "Contributed to redesign, continuous improvement, and feature development of ASP.NET applications, including move-expert.com and eurotax.fr, across backend and cloud integration",
+        "Performed debugging, code optimization, and quality assurance testing for performance and stability",
+        "Investigated and resolved an Azure cost spike through Reserved Capacity analysis",
+        "Modernized CI/CD pipelines with Azure DevOps and hardened Key Vault access via private endpoints for the Eurotax environment",
+        "Built a multi-tenant .NET Web API skeleton with role-based access control for partner/fiduciary clients",
+        "Managed databases and Azure infrastructure, including resource groups, virtual networks, and virtual machines for application hosting",
+        "Set up GTID-based MySQL replication across tenant databases",
+        "Configured cross-cloud backup strategies (Azure to AWS FSx via Veeam) and implemented multi-cloud data replication"
+      ]
+    },
+    {
+      "company": "Finreg Services",
+      "title": "Intern, .NET Developer",
+      "start": "2021-03",
+      "end": "2021-06",
+      "location": "Casablanca, Morocco",
+      "highlights": [
+        "Learned the company's N-Tier and MVC software architecture",
+        "Gained experience with development tools such as Visual Studio, Bitbucket, and SQL Server",
+        "Assisted in developing new features, fixing bugs, and conducting functional testing under supervision",
+        "Contributed to the maintenance of internal projects"
+      ]
+    },
+    {
+      "company": "CDMA Solution",
+      "title": "Web Developer",
+      "start": "2019-12",
+      "end": "2020-06",
+      "location": "Casablanca, Morocco",
+      "highlights": [
+        "Improved an existing web application for insurance claim experts",
+        "Designed and developed a stock management web application",
+        "Worked with PHP, Laravel, MySQL, Axios, OCR, Git, and GitHub"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Professional Bachelor's Degree in Web and Mobile Application Development",
+      "institution": "École Supérieure de Technologie (ESTC)",
+      "start": "2021-12",
+      "end": "2022-06",
+      "location": "Casablanca, Morocco"
+    },
+    {
+      "degree": "Specialized Technician Diploma in Software Development",
+      "institution": "Institut Spécialisé de Gestion et d'Informatique",
+      "start": "2017-09",
+      "end": "2019-06",
+      "location": "Casablanca, Morocco"
+    },
+    {
+      "degree": "Baccalaureate in Experimental Sciences (Life & Earth Sciences)",
+      "institution": "Lycée Omar Ibnou Al Khattab",
+      "start": "2016-09",
+      "end": "2017-06",
+      "location": "Casablanca, Morocco"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Aloud (Clario)",
+      "description": "Chrome extension for reading web pages aloud with text-to-speech.",
+      "tags": ["Chrome Extension", "JavaScript"]
+    },
+    {
+      "name": "IMI Robot (RTPD)",
+      "description": "Automation system for EU road transport posting declarations.",
+      "tags": [".NET", "Automation"]
+    }
+  ],
+  "certifications": [],
+  "training": [
+    "Advanced training in Angular",
+    "In-depth course on Node.js and Express",
+    "Web API development with NestJS",
+    "Advanced CSS techniques course",
+    "Advanced training in JavaScript"
+  ],
+  "languages": [
+    { "name": "Arabic", "level": "Native" },
+    { "name": "French", "level": "Limited working proficiency" },
+    { "name": "English", "level": "Professional working proficiency" }
+  ],
+  "interests": ["Camping", "Travel", "Chess"]
+}

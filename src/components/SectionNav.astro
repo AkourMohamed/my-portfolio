@@ -1,0 +1,124 @@
+---
+interface Item {
+  id: string;
+  label: string;
+}
+interface Props {
+  items: Item[];
+}
+const { items } = Astro.props;
+---
+
+<nav class="section-nav" aria-label="Sections">
+  <span class="rail" aria-hidden="true"></span>
+  <span class="indicator" aria-hidden="true"></span>
+  <ul>
+    {
+      items.map((item) => (
+        <li>
+          <a href={`#${item.id}`} data-target={item.id}>
+            <span class="dot" aria-hidden="true" />
+            <span class="label">{item.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script src="/scripts/section-nav.js" is:inline defer></script>
+
+<style>
+  .section-nav {
+    position: fixed;
+    top: 50%;
+    inset-inline-start: 56px;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  .section-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .rail {
+    position: absolute;
+    inset-inline-start: -9px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .indicator {
+    position: absolute;
+    inset-inline-start: -9px;
+    top: 0;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition:
+      transform 0.35s ease,
+      height 0.35s ease;
+  }
+  .section-nav li {
+    margin-bottom: 4px;
+  }
+  .section-nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 8px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease;
+  }
+  .label {
+    /* Collapsed to zero width at rest so it never extends the anchor's
+       own clickable box into page content beside it. Grown via max-width
+       (not position: absolute) so the hit area always matches exactly
+       what's visible, with no dead gap between the dot and the text where
+       hover could be lost before a click lands. */
+    display: inline-block;
+    max-width: 0;
+    margin-inline-start: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-width 0.25s ease,
+      margin-inline-start 0.25s ease,
+      opacity 0.2s ease;
+  }
+  .section-nav a:hover .label,
+  .section-nav a.active .label,
+  .section-nav a.peek .label {
+    max-width: 260px;
+    margin-inline-start: 10px;
+    opacity: 1;
+  }
+  .section-nav a.active {
+    color: var(--text);
+  }
+  .section-nav a.active .dot {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+  @media (max-width: 1320px) {
+    .section-nav {
+      display: none;
+    }
+  }
+</style>
