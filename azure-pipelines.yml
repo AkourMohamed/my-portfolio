@@ -1,1 +1,57 @@
-##
+# Azure DevOps pipeline: builds the Astro site and deploys it to an
+# Azure App Service (Linux, Node) as a small Express static server, since
+# App Service — unlike Azure Static Web Apps — expects to run an app rather
+# than just host files.
+#
+# App Service: mo-akour-portfolio (Basic B1, Linux, France Central)
+#   https://mo-akour-portfolio.azurewebsites.net
+#
+# Setup complete: service connection "azureSubscription" created, the
+# GITHUB_CONTRIB_TOKEN secret pipeline variable is set, and the App Service
+# has SCM_DO_BUILD_DURING_DEPLOYMENT=true + httpsOnly=true.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  appServiceName: "mo-akour-portfolio"
+  azureSubscription: "azureSubscription"
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "20.x"
+    displayName: "Install Node.js"
+
+  - script: |
+      npm ci
+      npm run build
+    displayName: "Install dependencies and build the Astro site"
+    env:
+      GITHUB_CONTRIB_TOKEN: $(GITHUB_CONTRIB_TOKEN)
+
+  - script: cp -r dist server/dist
+    displayName: "Copy the built site into the server package"
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "server"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/app.zip"
+      replaceExistingArchive: true
+    displayName: "Zip the server and built site"
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      appType: "webAppLinux"
+      appName: "$(appServiceName)"
+      package: "$(Build.ArtifactStagingDirectory)/app.zip"
+      runtimeStack: "NODE|22-lts"
+    displayName: "Deploy to Azure App Service"

@@ -1,9 +1,10 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
-// IMPORTANT: set this to your real domain once you have one.
-// It drives canonical URLs, sitemap.xml and RSS — all SEO-critical.
-const SITE_URL = "https://mo-akour.dev";
+// IMPORTANT: temporary — using the Azure App Service hostname until the
+// mo-akour.dev domain is purchased. Switch back to the real domain then;
+// this drives canonical URLs, sitemap.xml and RSS — all SEO-critical.
+const SITE_URL = "https://mo-akour-portfolio.azurewebsites.net";
 
 export default defineConfig({
   site: SITE_URL,
