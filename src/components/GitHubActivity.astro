@@ -43,12 +43,13 @@ const legendColors = ["#9be9a8", "#40c463", "#30a14e", "#216e39"];
         </a>
       </p>
       <div class="chart-card" dir="ltr">
-        <div
-          class="chart"
-          style={`grid-template-columns: auto repeat(${calendar.weeks.length}, 1fr)`}
-          role="img"
-          aria-label={`${calendar.totalContributions} ${t("github.contributions")}`}
-        >
+        <div class="overflow-x-auto">
+          <div
+            class="chart min-w-[480px]"
+            style={`grid-template-columns: auto repeat(${calendar.weeks.length}, 1fr)`}
+            role="img"
+            aria-label={`${calendar.totalContributions} ${t("github.contributions")}`}
+          >
           {monthLabels.map((m) => (
             <span class="mono month-label" style={`grid-column: ${m.weekIndex + 2}; grid-row: 1`}>
               {m.label}
@@ -69,6 +70,7 @@ const legendColors = ["#9be9a8", "#40c463", "#30a14e", "#216e39"];
               />
             )),
           )}
+          </div>
         </div>
         <div class="legend mono muted">
           <span>{t("github.legend.less")}</span>

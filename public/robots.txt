@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mo-akour.dev/sitemap-index.xml
+Sitemap: https://makour.dev/sitemap-index.xml

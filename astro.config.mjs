@@ -1,16 +1,21 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import tailwind from "@astrojs/tailwind";
 
-// IMPORTANT: temporary — using the Azure App Service hostname until the
-// mo-akour.dev domain is purchased. Switch back to the real domain then;
-// this drives canonical URLs, sitemap.xml and RSS — all SEO-critical.
-const SITE_URL = "https://mo-akour-portfolio.azurewebsites.net";
+// Drives canonical URLs, sitemap.xml and RSS — all SEO-critical.
+const SITE_URL = "https://makour.dev";
 
 export default defineConfig({
   site: SITE_URL,
   integrations: [
     sitemap({
       filter: (page) => !page.endsWith("/404/") && !page.endsWith("/404"),
+    }),
+    tailwind({
+      // Preflight would reset the hand-tuned typography/spacing already
+      // in global.css (h1-h3, body line-height, etc.) — Tailwind is here
+      // strictly for utility classes, not to own the base styles.
+      applyBaseStyles: false,
     }),
   ],
   i18n: {

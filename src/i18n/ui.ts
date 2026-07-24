@@ -46,6 +46,10 @@ export const ui = {
     "blog.description": "Notes on cloud, DevOps, and building things.",
     "blog.empty": "No posts yet.",
     "blog.englishOnly": "Blog (English only)",
+    "contact.menuLabel": "Contact options",
+    "contact.call": "Call",
+    "contact.callWhatsapp": "Call on WhatsApp",
+    "contact.chatWhatsapp": "Chat on WhatsApp",
   },
   fr: {
     "hero.status": "statut : ouvert aux postes cloud & devops",
@@ -79,6 +83,10 @@ export const ui = {
     "blog.description": "Notes sur le cloud, le DevOps et la construction de projets.",
     "blog.empty": "Aucun article pour le moment.",
     "blog.englishOnly": "Blog (disponible en anglais uniquement)",
+    "contact.menuLabel": "Options de contact",
+    "contact.call": "Appeler",
+    "contact.callWhatsapp": "Appeler sur WhatsApp",
+    "contact.chatWhatsapp": "Discuter sur WhatsApp",
   },
   ar: {
     "hero.status": "الحالة: متاح لأدوار الحوسبة السحابية و DevOps",
@@ -112,5 +120,9 @@ export const ui = {
     "blog.description": "ملاحظات حول الحوسبة السحابية و DevOps وبناء الأشياء.",
     "blog.empty": "لا توجد مقالات بعد.",
     "blog.englishOnly": "المدونة (باللغة الإنجليزية فقط)",
+    "contact.menuLabel": "خيارات التواصل",
+    "contact.call": "اتصال",
+    "contact.callWhatsapp": "الاتصال عبر واتساب",
+    "contact.chatWhatsapp": "الدردشة عبر واتساب",
   },
 } as const;

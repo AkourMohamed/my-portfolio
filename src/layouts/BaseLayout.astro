@@ -2,6 +2,7 @@
 import Seo from "@/components/Seo.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
+import ContactFab from "@/components/ContactFab.astro";
 import "@/styles/global.css";
 import { defaultLang, isRtl } from "@/i18n/ui";
 import type { Lang } from "@/i18n/ui";
@@ -61,5 +62,6 @@ const {
       <slot />
     </main>
     <SiteFooter lang={lang} />
+    <ContactFab lang={lang} />
   </body>
 </html>

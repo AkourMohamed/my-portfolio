@@ -1,3 +1,8 @@
+/* Utilities only — no @tailwind base (Preflight would fight the hand-tuned
+   typography/resets below) and no @tailwind components (nothing here uses
+   Tailwind's component layer). */
+@tailwind utilities;
+
 /*
   Design tokens
   -------------
